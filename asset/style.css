@@ -7,6 +7,9 @@
     --text-secondary: #a0a0a0;
     --font-primary: 'Montserrat', sans-serif;
     --font-display: 'Playfair Display', serif;
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/" }
+  ]
 }
 
 * {
