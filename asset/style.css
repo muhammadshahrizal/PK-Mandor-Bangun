@@ -27,9 +27,14 @@ body {
 }
 
 .container {
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
+}
+
+.logo img {
+    height: 65px; /* Anda bisa sesuaikan tinggi logo di sini */
+    display: block; /* Menghilangkan spasi ekstra di bawah gambar */
 }
 
 h1,
@@ -125,7 +130,7 @@ section {
 /* Hero Section */
 .hero {
     height: 100vh;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('');
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('../Image/Background.png');
     background-size: cover;
     background-position: center;
     display: flex;
