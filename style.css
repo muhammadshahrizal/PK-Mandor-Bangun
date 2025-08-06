@@ -130,7 +130,7 @@ section {
 /* Hero Section */
 .hero {
     height: 100vh;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('../Image/Background.png');
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('Image/Background.png');
     background-size: cover;
     background-position: center;
     display: flex;
