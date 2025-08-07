@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open index.html",
-            "file": "d:\\MandorBangun\\pages\\index.html"
+            "file": "G:\\PK-Mandor-Bangun\\PK-Mandor-Bangun\\index.html"
         }
     ]
 }
