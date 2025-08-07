@@ -113,4 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el); // Mulai observasi elemen
     });
 
+    
+
 });

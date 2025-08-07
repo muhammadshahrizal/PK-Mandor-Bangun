@@ -8,7 +8,11 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open index.html",
+<<<<<<< Updated upstream
             "file": "G:\\PK-Mandor-Bangun\\PK-Mandor-Bangun\\index.html"
+=======
+            "file": "d:\\MandorBangun\\index.html"
+>>>>>>> Stashed changes
         }
     ]
 }
