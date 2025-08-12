@@ -1,10 +1,15 @@
-/* CSS Reset and Basic Setup */
+/* ========================
+   CSS Reset & Variables
+========================= */
 :root {
+    /* Colors */
     --bg-dark: #0a0a0a;
     --bg-card: #1a1a1a;
     --gold: #D4AF37;
     --text-light: #f0f0f0;
     --text-secondary: #a0a0a0;
+
+    /* Fonts */
     --font-primary: 'Montserrat', sans-serif;
     --font-display: 'Playfair Display', serif;
 }
@@ -33,13 +38,11 @@ body {
 }
 
 .logo img {
-    height: 65px; /* Anda bisa sesuaikan tinggi logo di sini */
-    display: block; /* Menghilangkan spasi ekstra di bawah gambar */
+    height: 65px;
+    display: block;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
     font-family: var(--font-display);
     color: var(--gold);
     line-height: 1.2;
@@ -65,7 +68,9 @@ section {
     margin: 0 auto;
 }
 
-/* Header & Navigation */
+/* ========================
+   Header & Navigation
+========================= */
 .header {
     background-color: rgba(10, 10, 10, 0.7);
     backdrop-filter: blur(10px);
@@ -83,18 +88,11 @@ section {
     align-items: center;
 }
 
-.logo {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--gold);
-    text-decoration: none;
-}
-
-.nav-links {
+.nav-links ul {
     list-style: none;
     display: flex;
     gap: 25px;
+    margin: 0;
 }
 
 .nav-links a {
@@ -104,8 +102,8 @@ section {
     font-size: 0.9rem;
     letter-spacing: 1px;
     padding: 5px 0;
-    transition: color 0.3s ease;
     position: relative;
+    transition: color 0.3s ease;
 }
 
 .nav-links a::after {
@@ -127,14 +125,17 @@ section {
     width: 100%;
 }
 
-/* Hero Section */
+/* ========================
+        Hero Section
+========================= */
 .hero {
     height: 100vh;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('Image/Background.png');
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('../images/Background.png');
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
+    padding-top: 80px;
 }
 
 .hero-content {
@@ -160,8 +161,8 @@ section {
     border-radius: 5px;
     text-decoration: none;
     font-weight: 700;
-    transition: all 0.3s ease;
     border: 2px solid var(--gold);
+    transition: all 0.3s ease;
 }
 
 .btn:hover {
@@ -169,7 +170,13 @@ section {
     color: var(--gold);
 }
 
-/* Services Section */
+/* ========================
+     Services Section
+========================= */
+#services {
+    padding-top: 100px;
+}
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -205,11 +212,84 @@ section {
     color: var(--text-secondary);
 }
 
-/* Alur Kerja Section */
+/* ========================
+   Gallery Section (Slider Cards)
+========================= */
+.gallery-section {
+    padding: 80px 0;
+    background-color: var(--bg-card);
+}
 
-/* Portfolio Section */
+.gallery-container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 10px;
+    height: 60vh;
+    min-height: 500px;
+}
+
+.card {
+    position: relative;
+    flex: 0.5;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: flex 0.7s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 25px;
+    color: white;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.card .content h2 {
+    font-family: var(--font-display);
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.card .content p {
+    font-size: 0.9em;
+    color: var(--text-light);
+}
+
+.card:hover {
+    flex: 4;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.card:hover .content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ========================
+     Portfolio Section
+========================= */
 #portfolio {
     background-color: var(--bg-card);
+    padding-top: 100px;
 }
 
 .portfolio-grid {
@@ -227,7 +307,6 @@ section {
 .portfolio-item img {
     width: 100%;
     height: 100%;
-    display: block;
     object-fit: cover;
     transition: transform 0.4s ease;
 }
@@ -259,7 +338,9 @@ section {
     font-size: 1.2rem;
 }
 
-/* Footer */
+/* ========================
+         Footer
+========================= */
 .footer {
     background-color: #000;
     padding: 80px 0 30px;
@@ -274,7 +355,6 @@ section {
 }
 
 .footer-widget h4 {
-    font-family: var(--font-primary);
     font-size: 1.2rem;
     color: var(--text-light);
     margin-bottom: 20px;
@@ -293,11 +373,6 @@ section {
     background-color: var(--gold);
 }
 
-.footer-widget .logo {
-    margin-bottom: 15px;
-    display: inline-block;
-}
-
 .footer-widget p,
 .footer-widget a {
     color: var(--text-secondary);
@@ -306,6 +381,7 @@ section {
 
 .footer-links {
     list-style: none;
+    padding: 0;
 }
 
 .footer-links li {
@@ -354,7 +430,9 @@ address {
     font-size: 0.9rem;
 }
 
-/* WhatsApp FAB */
+/* ========================
+      WhatsApp Floating Button
+========================= */
 .whatsapp-fab {
     position: fixed;
     bottom: 30px;
@@ -378,19 +456,28 @@ address {
     transform: scale(1.1);
 }
 
-/* Responsive Design */
+/* ========================
+    Responsive Design
+========================= */
 @media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        /* Simplifikasi untuk mobile, bisa diganti dengan menu burger */
+    .gallery-container {
+        flex-direction: column;
+        height: auto;
+        gap: 20px;
     }
 
-    .hero-content h1 {
-        font-size: 2.8rem;
+    .card {
+        flex: 1;
+        height: 400px;
     }
 
-    .section-title h2 {
-        font-size: 2rem;
+    .card:hover {
+        flex: 1;
+    }
+
+    .card .content {
+        transform: translateY(0);
+        opacity: 1;
     }
 
     .portfolio-grid {
@@ -410,10 +497,12 @@ address {
     .contact-info p {
         justify-content: center;
     }
-}
 
-@media (max-width: 480px) {
-    .portfolio-grid {
-        grid-template-columns: 1fr;
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+
+    .section-title h2 {
+        font-size: 2rem;
     }
 }
