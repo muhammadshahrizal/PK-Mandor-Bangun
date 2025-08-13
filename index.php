@@ -40,7 +40,7 @@ while ($row = mysqli_fetch_assoc($settings_result)) {
         <div class="hero-content">
             <h1>Desain & Bangun dengan Kualitas Premium</h1>
             <p>Kami adalah mitra terpercaya Anda dalam mewujudkan properti impian, dari konsep hingga serah terima kunci di Semarang dan sekitarnya.</p>
-            <a href="<?php echo BASE_URL; ?>assets/images/katalog design mandorbangun.id.pdf" target="_blank" class="btn">Lihat Katalog Kami</a>
+            <a href="https://drive.google.com/file/d/1UvXdn8dAAwtr6iu0_mNiqSDhvuctwdpv/view?usp=sharing" target="_blank" class="btn">Lihat Katalog Kami</a>
         </div>
     </div>
 </section>

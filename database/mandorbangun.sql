@@ -18,7 +18,7 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES
-(1, 'admin', '$2y$10$g0B3g5vD.rR7oQ3hL2E4.O0dYJ5wE.zJ8.fG9iX3uK2L6uN4oB8iO');
+(1, 'admin', '$2y$10$YBGuqj8hHmEdFp3V3Z5bWu/PaQIZaz/Jp5n2RZ3YHSUuoTmby251C');
 
 --
 -- Struktur tabel baru untuk `portfolio`
@@ -92,14 +92,14 @@ CREATE TABLE `gallery` (
 -- Dumping data for table `gallery` (contoh data awal)
 --
 INSERT INTO `gallery` (`id`, `image_path`, `title`, `order_num`) VALUES
-(1, 'assets/images/gallery/story 01.png', 'Alur Kerja', 10),
-(2, 'assets/images/gallery/story 02.png', 'Alur Kerja', 20),
-(3, 'assets/images/gallery/story 03.png', 'Alur Kerja', 30),
-(4, 'assets/images/gallery/story 04.png', 'Alur Kerja', 40),
-(5, 'assets/images/gallery/story 05.png', 'Alur Kerja', 50),
-(6, 'assets/images/gallery/story 06.png', 'Alur Kerja', 60),
-(7, 'assets/images/gallery/story 07.png', 'Alur Kerja', 70),
-(8, 'assets/images/gallery/story 08.png', 'Alur Kerja', 80);
+(1, 'assets/images/gallery/story 01.png', 'Konsultasi', 10),
+(2, 'assets/images/gallery/story 02.png', 'Survei', 20),
+(3, 'assets/images/gallery/story 03.png', 'Perancanaan', 30),
+(4, 'assets/images/gallery/story 04.png', 'Akad Pelaksanaan', 40),
+(5, 'assets/images/gallery/story 05.png', 'Suervei Pra Pelaksanaan', 50),
+(6, 'assets/images/gallery/story 06.png', 'Pelaksanaan', 60),
+(7, 'assets/images/gallery/story 07.png', 'Cek List B.A.S.T', 70),
+(8, 'assets/images/gallery/story 08.png', 'BAST (Berita Acara Serah Terima)', 80);
 
 --
 -- Indexes for dumped tables
