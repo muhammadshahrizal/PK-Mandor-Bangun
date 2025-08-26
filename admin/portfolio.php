@@ -35,10 +35,10 @@
                     echo "<td>" . htmlspecialchars($row['title']) . "</td>";
                     echo "<td>
                             <a href='portfolio_form.php?id=" . $row['id'] . "' class='btn-edit'>Edit</a>
-                            <form action='process.php' method='POST' style='display:inline-block;' onsubmit='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\");'>
-                                <input type='hidden' name='action' value='delete_portfolio'>
+                            <form action='process.php' method='POST' style='display:inline-block;'>
+                                <input type='hidden' name='action' value='delete_service'>
                                 <input type='hidden' name='id' value='" . $row['id'] . "'>
-                                <button type='submit' class='btn-delete'>Hapus</button>
+                                <button type='button' class='btn-delete delete-trigger-btn'>Hapus</button>
                             </form>
                           </td>";
                     echo "</tr>";

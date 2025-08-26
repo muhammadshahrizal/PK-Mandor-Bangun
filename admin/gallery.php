@@ -2,7 +2,7 @@
 
 <div class="admin-content">
     <div class="content-header">
-        <h2>Kelola Galeri Geser</h2>
+        <h2>Kelola Galeri</h2>
         <a href="gallery_form.php" class="btn-add">Tambah Gambar Baru</a>
     </div>
 
@@ -15,13 +15,18 @@
             <tr>
                 <th style="width: 80px; text-align: center;">Urutan</th>
                 <th>Gambar</th>
-                <th>Judul (Opsional)</th>
+                <th>Judul Gambar</th>
+                <th>Kategori</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody id="sortable-rows">
             <?php
-            $sql = "SELECT * FROM gallery ORDER BY order_num ASC";
+            // Mengambil data item galeri beserta nama kategorinya
+            $sql = "SELECT gi.id, gi.title, gi.image_path, gi.order_num, gc.title as category_title 
+                    FROM gallery_items gi
+                    JOIN gallery_categories gc ON gi.category_id = gc.id
+                    ORDER BY gi.order_num ASC, gi.id DESC";
             $result = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($result) > 0) {
@@ -30,28 +35,26 @@
                     echo "<td class='order-handle' style='text-align: center;'>" . htmlspecialchars($row['order_num']) . "</td>";
                     echo "<td><img src='" . BASE_URL . htmlspecialchars($row['image_path']) . "' alt='" . htmlspecialchars($row['title']) . "' height='50'></td>";
                     echo "<td>" . htmlspecialchars($row['title']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['category_title']) . "</td>";
                     echo "<td>
                             <a href='gallery_form.php?id=" . $row['id'] . "' class='btn-edit'>Edit</a>
-                            <form action='process.php' method='POST' style='display:inline-block;' onsubmit='return confirm(\"Apakah Anda yakin ingin menghapus gambar ini?\");'>
-                                <input type='hidden' name='action' value='delete_gallery_item'>
+                            <form action='process.php' method='POST' style='display:inline-block;'>
+                                <input type='hidden' name='action' value='delete_service'>
                                 <input type='hidden' name='id' value='" . $row['id'] . "'>
-                                <button type='submit' class='btn-delete'>Hapus</button>
+                                <button type='button' class='btn-delete delete-trigger-btn'>Hapus</button>
                             </form>
                           </td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='4'>Belum ada gambar di galeri.</td></tr>";
+                echo "<tr><td colspan='5'>Belum ada gambar di galeri.</td></tr>";
             }
             ?>
         </tbody>
     </table>
 </div>
 
-<!-- Library SortableJS dari CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-
-<!-- Script untuk inisialisasi drag-and-drop -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const sortableBody = document.getElementById('sortable-rows');
@@ -63,19 +66,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 const rows = sortableBody.querySelectorAll('tr');
                 const orderData = [];
                 rows.forEach((row, index) => {
-                    orderData.push({
-                        id: row.dataset.id,
-                        position: index + 1
-                    });
+                    orderData.push({ id: row.dataset.id, position: index + 1 });
                 });
 
                 fetch('process_ordering.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        type: 'gallery', // Menggunakan tipe 'gallery'
-                        order: orderData
-                    })
+                    body: JSON.stringify({ type: 'gallery_items', order: orderData })
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -83,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         rows.forEach((row, index) => {
                             row.querySelector('.order-handle').textContent = index + 1;
                         });
-                        console.log('Urutan galeri berhasil disimpan!');
                     }
                 });
             }

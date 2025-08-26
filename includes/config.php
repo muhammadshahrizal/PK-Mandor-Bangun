@@ -10,6 +10,12 @@ define('DB_NAME', 'mandorbangun_db');
 define('WEBSITE_NAME', 'Mandorbangun.id');
 define('BASE_URL', 'http://localhost/mandorbangun.id/'); // Sesuaikan dengan struktur folder Anda
 
+// Pengaturan batas waktu logout otomatis (dalam detik)
+define('INACTIVE_TIMEOUT', 600); // 1 detik untuk logout sesegera mungkin
+
+// Pengaturan session agar berakhir saat browser ditutup
+session_set_cookie_params(0);
+
 // Memulai session
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

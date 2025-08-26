@@ -20,14 +20,21 @@ if ($data['type'] === 'portfolio') {
     $table_name = 'portfolio';
 } elseif ($data['type'] === 'services') {
     $table_name = 'services';
-} elseif ($data['type'] === 'gallery') { // Tambahkan kondisi untuk galeri
-    $table_name = 'gallery';
-} else {
+} elseif ($data['type'] === 'alur_kerja') {
+    $table_name = 'alur_kerja';
+} 
+// TAMBAHKAN KONDISI BARU DI SINI
+elseif ($data['type'] === 'gallery_items') {
+    $table_name = 'gallery_items';
+} elseif ($data['type'] === 'gallery_categories') {
+    $table_name = 'gallery_categories';
+} 
+// AKHIR DARI KONDISI BARU
+else {
     echo json_encode(['success' => false, 'message' => 'Tipe tidak dikenal']);
     exit;
 }
 
-// Mulai transaksi untuk memastikan semua update berhasil atau tidak sama sekali
 mysqli_begin_transaction($conn);
 
 try {
@@ -44,12 +51,10 @@ try {
     }
     mysqli_stmt_close($stmt);
 
-    // Jika semua berhasil, commit transaksi
     mysqli_commit($conn);
     echo json_encode(['success' => true]);
 
 } catch (Exception $e) {
-    // Jika ada error, rollback semua perubahan
     mysqli_rollback($conn);
     echo json_encode(['success' => false, 'message' => 'Gagal memperbarui urutan: ' . $e->getMessage()]);
 }

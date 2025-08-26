@@ -9,6 +9,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
 $error_message = '';
 
+// Cek jika ada status dari redirect (misal: karena inaktivitas)
+if (isset($_GET['status']) && $_GET['status'] === 'inactive') {
+    $error_message = 'Anda telah logout otomatis karena tidak ada aktivitas.';
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -27,9 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if(mysqli_stmt_fetch($stmt)){
                     // Verifikasi password
                     if(password_verify($password, $hashed_password)){
+                        // Regenerasi session ID untuk keamanan
+                        session_regenerate_id(true);
+                        
                         $_SESSION['loggedin'] = true;
                         $_SESSION['id'] = $id;
                         $_SESSION['username'] = $username;
+                        $_SESSION['last_activity'] = time(); // Atur waktu aktivitas awal
                         
                         header("Location: " . BASE_URL . "admin/");
                         exit;

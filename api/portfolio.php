@@ -7,17 +7,22 @@ require_once '../includes/config.php';
 
 try {
     // Query untuk mengambil data portfolio dari database
-    $sql = "SELECT title, image_path, description FROM portfolio ORDER BY id";
+    $sql = "SELECT title, image_path, service_id FROM portfolio ORDER BY order_num ASC";;
+    $result = mysqli_query($conn, $sql);
+    
+    $portfolio = array();
+    
+    $sql = "SELECT title, image_path, service_id FROM portfolio ORDER BY order_num ASC";
     $result = mysqli_query($conn, $sql);
     
     $portfolio = array();
     
     if ($result && mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
+            // REVISI: Hapus 'description' dari array output
             $portfolio[] = array(
                 "image" => $row['image_path'],
-                "title" => $row['title'],
-                "description" => $row['description'] ?? ''
+                "title" => $row['title']
             );
         }
     } else {

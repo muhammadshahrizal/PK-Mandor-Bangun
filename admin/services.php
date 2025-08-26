@@ -5,10 +5,11 @@
         <h2>Kelola Layanan</h2>
         <a href="service_form.php" class="btn-add">Tambah Layanan Baru</a>
     </div>
-    
+
     <?php include '../includes/admin_notifications.php'; ?>
 
-    <p class="drag-info"><i class="fas fa-arrows-alt"></i> Klik dan seret pada kolom "Urutan" untuk memindahkan baris.</p>
+    <p class="drag-info"><i class="fas fa-arrows-alt"></i> Klik dan seret pada kolom "Urutan" untuk memindahkan baris.
+    </p>
 
     <table class="draggable-table">
         <thead>
@@ -25,17 +26,17 @@
             $result = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($result) > 0) {
-                while($row = mysqli_fetch_assoc($result)) {
+                while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr data-id='" . $row['id'] . "'>";
                     echo "<td class='order-handle' style='text-align: center;'>" . htmlspecialchars($row['order_num']) . "</td>";
                     echo "<td><i class='" . htmlspecialchars($row['icon_class']) . "'></i></td>";
                     echo "<td>" . htmlspecialchars($row['title']) . "</td>";
                     echo "<td>
                             <a href='service_form.php?id=" . $row['id'] . "' class='btn-edit'>Edit</a>
-                            <form action='process.php' method='POST' style='display:inline-block;' onsubmit='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\");'>
+                            <form action='process.php' method='POST' style='display:inline-block;'>
                                 <input type='hidden' name='action' value='delete_service'>
                                 <input type='hidden' name='id' value='" . $row['id'] . "'>
-                                <button type='submit' class='btn-delete'>Hapus</button>
+                                <button type='button' class='btn-delete delete-trigger-btn'>Hapus</button>
                             </form>
                           </td>";
                     echo "</tr>";
@@ -53,45 +54,45 @@
 
 <!-- Script untuk inisialisasi drag-and-drop -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const sortableBody = document.getElementById('sortable-rows');
-    if (sortableBody) {
-        new Sortable(sortableBody, {
-            animation: 150,
-            handle: '.order-handle',
-            onEnd: function (evt) {
-                const rows = sortableBody.querySelectorAll('tr');
-                const orderData = [];
-                rows.forEach((item, index) => {
-                    orderData.push({
-                        id: item.dataset.id,
-                        position: index + 1
-                    });
-                });
-
-                fetch('process_ordering.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ type: 'services', order: orderData })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if(data.success) {
-                        rows.forEach((row, index) => {
-                            row.querySelector('.order-handle').textContent = index + 1;
+    document.addEventListener('DOMContentLoaded', function () {
+        const sortableBody = document.getElementById('sortable-rows');
+        if (sortableBody) {
+            new Sortable(sortableBody, {
+                animation: 150,
+                handle: '.order-handle',
+                onEnd: function (evt) {
+                    const rows = sortableBody.querySelectorAll('tr');
+                    const orderData = [];
+                    rows.forEach((item, index) => {
+                        orderData.push({
+                            id: item.dataset.id,
+                            position: index + 1
                         });
-                        console.log('Urutan layanan berhasil disimpan!');
-                    } else {
-                        alert('Gagal menyimpan urutan: ' + (data.message || 'Error tidak diketahui'));
-                    }
-                }).catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan saat menghubungi server.');
-                });
-            }
-        });
-    }
-});
+                    });
+
+                    fetch('process_ordering.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ type: 'services', order: orderData })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                rows.forEach((row, index) => {
+                                    row.querySelector('.order-handle').textContent = index + 1;
+                                });
+                                console.log('Urutan layanan berhasil disimpan!');
+                            } else {
+                                alert('Gagal menyimpan urutan: ' + (data.message || 'Error tidak diketahui'));
+                            }
+                        }).catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan saat menghubungi server.');
+                        });
+                }
+            });
+        }
+    });
 </script>
 
 <?php require_once '../includes/admin_footer.php'; ?>

@@ -9,12 +9,12 @@ $services = [];
 while ($row = mysqli_fetch_assoc($services_result)) {
     $services[] = $row;
 }
-// Ambil gambar untuk galeri geser dari tabel 'gallery'
-$gallery_sql = "SELECT * FROM gallery ORDER BY order_num ASC";
-$gallery_result = mysqli_query($conn, $gallery_sql);
-$gallery_items = [];
-while($row = mysqli_fetch_assoc($gallery_result)){
-    $gallery_items[] = $row;
+// Ambil gambar untuk alur kerja dari tabel 'alur_kerja'
+$alur_kerja_sql = "SELECT * FROM alur_kerja ORDER BY order_num ASC";
+$alur_kerja_result = mysqli_query($conn, $alur_kerja_sql);
+$alur_kerja_items = [];
+while($row = mysqli_fetch_assoc($alur_kerja_result)){
+    $alur_kerja_items[] = $row;
 }
 
 // Ambil semua item portofolio untuk section portofolio utama
@@ -34,7 +34,6 @@ while ($row = mysqli_fetch_assoc($settings_result)) {
 }
 ?>
 
-<!-- ====== HERO SECTION ====== -->
 <section id="hero" class="hero">
     <div class="container">
         <div class="hero-content">
@@ -45,7 +44,6 @@ while ($row = mysqli_fetch_assoc($settings_result)) {
     </div>
 </section>
 
-<!-- ====== SERVICES SECTION ====== -->
 <section id="services">
     <div class="container">
         <div class="section-title">
@@ -64,14 +62,12 @@ while ($row = mysqli_fetch_assoc($settings_result)) {
     </div>
 </section>
 
-<!-- ====== SLIDING GALLERY SECTION ====== -->
-<section id="gallery" class="gallery-section">
+<section id="alur-kerja" class="alur-kerja-section">
     <div class="section-title">
-        <h2>Alur Kerja</h2>
-        <p>Arahkan kursor untuk melihat alur kerja kami.</p>
+        <h2>Alur Kerja Kami</h2>
     </div>
-    <div class="gallery-container">
-        <?php foreach ($gallery_items as $item): ?>
+    <div class="alur-kerja-container">
+        <?php foreach ($alur_kerja_items as $item): ?>
             <div class="card">
                 <img src="<?php echo BASE_URL . htmlspecialchars($item['image_path']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
                 <div class="content">
@@ -82,7 +78,6 @@ while ($row = mysqli_fetch_assoc($settings_result)) {
     </div>
 </section>
 
-<!-- ====== PORTFOLIO SECTION (TAMPILAN SEMUA) ====== -->
 <section id="portfolio">
     <div class="container">
         <div class="section-title">
@@ -99,54 +94,13 @@ while ($row = mysqli_fetch_assoc($settings_result)) {
                 </div>
             <?php endforeach; ?>
         </div>
-    </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="gallery.php" class="btn">Lihat Galeri Lengkap</a>
+        </div>
+        </div>
 </section>
 
-</main>
-<!-- ====== FOOTER ====== -->
-<footer id="footer" class="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-widget">
-                <h4>Hubungi Kami</h4>
-                <address class="contact-info">
-                    <p>
-                        <a href="https://maps.google.com/?q=<?php echo urlencode($settings['contact_address'] ?? ''); ?>" target="_blank">
-                            <i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($settings['contact_address'] ?? 'Alamat belum diatur'); ?>
-                        </a>
-                    </p>
-                    <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars($settings['contact_phone'] ?? 'Telepon belum diatur'); ?></p>
-                    <p><i class="fas fa-envelope"></i> <?php echo htmlspecialchars($settings['contact_email'] ?? 'Email belum diatur'); ?></p>
-                </address>
-            </div>
-            <div class="footer-widget">
-                <h4>Navigasi</h4>
-                <ul class="footer-links">
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#services">Layanan</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                </ul>
-            </div>
-            <div class="footer-widget">
-                <h4>Media Sosial</h4>
-                <div class="social-media">
-                    <a href="https://www.instagram.com/mandorbangun.id?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/share/19mAYXhapV/" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://youtube.com/@mandorbangun?feature=shared" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="https://www.tiktok.com/@mandorbangun.id?is_from_webapp=1&sender_device=pc" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; <?php echo date("Y"); ?> <?php echo WEBSITE_NAME; ?>. Seluruh Hak Cipta Dilindungi.</p>
-        </div>
-    </div>
-</footer>
-
-<a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $settings['contact_phone'] ?? '628123456789'); ?>?text=Halo%20MinDor,%20saya%20mau%20konsultasi%20dong." target="_blank" class="whatsapp-fab">
-    <i class="fa-brands fa-whatsapp"></i>
-</a>
-<script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
-
-</body>
-</html>
+<?php
+require_once 'includes/footer.php';
+?>

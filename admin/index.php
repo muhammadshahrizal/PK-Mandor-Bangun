@@ -29,20 +29,97 @@ $portfolio_total = mysqli_fetch_assoc($portfolio_count_result)['total'];
             <div class="card-value"><?php echo $portfolio_total; ?></div>
             <div class="card-label">Portfolio Items</div>
         </div>
-        <!-- Card Pengunjung (Contoh Statis) -->
+        <!-- Card Pengunjung Bulan Ini (Real-time) -->
         <div class="dashboard-card">
             <div class="card-icon"><i class="fas fa-users"></i></div>
-            <div class="card-value">1,234</div>
+            <div id="monthly-visitors-count" class="card-value">...</div>
             <div class="card-label">Pengunjung Bulan Ini</div>
         </div>
-        <!-- Card Pesan Masuk (Contoh Statis) -->
         <div class="dashboard-card">
-            <div class="card-icon"><i class="fas fa-envelope"></i></div>
-            <div class="card-value">42</div>
-            <div class="card-label">Pesan Masuk</div>
+            <div class="card-icon"><i class="fas fa-globe"></i></div>
+            <div id="online-now-count" class="card-value">...</div>
+            <div class="card-label">Pengunjung Saat Ini</div>
         </div>
     </div>
 </div>
+
+<!-- HTML untuk Modal Konfirmasi -->
+<div id="reset-confirmation-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Konfirmasi Reset</h3>
+        <p>Apakah Anda yakin ingin mereset hitungan pengunjung bulan ini menjadi 0? Tindakan ini tidak dapat diurungkan.
+        </p>
+        <div class="modal-buttons">
+            <button id="confirm-reset-btn" class="btn-delete">Ya, Reset</button>
+            <button id="cancel-reset-btn" class="btn-secondary">Batal</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const monthlyVisitorsEl = document.getElementById('monthly-visitors-count');
+        const onlineNowEl = document.getElementById('online-now-count');
+
+        function fetchVisitorData() {
+            const apiUrl = '<?php echo BASE_URL; ?>api/visitors.php';
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    monthlyVisitorsEl.textContent = data.monthly_visitors || 0;
+                    onlineNowEl.textContent = data.online_now || 0;
+                })
+                .catch(error => {
+                    console.error('Error:', error.message);
+                    monthlyVisitorsEl.textContent = 'N/A';
+                    onlineNowEl.textContent = 'N/A';
+                });
+        }
+
+        // Ambil data saat halaman pertama kali dimuat
+        fetchVisitorData();
+
+        // Atur interval untuk memperbarui data setiap 5 detik
+        setInterval(fetchVisitorData, 5000);
+
+
+        // Logika untuk Modal Reset
+        const modal = document.getElementById('reset-confirmation-modal');
+        const openModalBtn = document.getElementById('reset-monthly-btn');
+        const closeModalBtn = document.getElementById('cancel-reset-btn');
+        const confirmResetBtn = document.getElementById('confirm-reset-btn');
+
+        openModalBtn.addEventListener('click', () => modal.classList.add('show'));
+        closeModalBtn.addEventListener('click', () => modal.classList.remove('show'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+
+        confirmResetBtn.addEventListener('click', () => {
+            const resetApiUrl = '<?php echo BASE_URL; ?>api/reset_visitors.php';
+
+            fetch(resetApiUrl, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Perbarui tampilan secara manual setelah reset berhasil
+                        monthlyVisitorsEl.textContent = '0';
+                        onlineNowEl.textContent = '0'; // Pengunjung online juga direset
+                    } else {
+                        alert('Gagal mereset: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error saat mereset:', error))
+                .finally(() => {
+                    modal.classList.remove('show'); // Tutup modal setelah selesai
+                });
+        });
+    });
+</script>
 
 <?php
 require_once '../includes/admin_footer.php';

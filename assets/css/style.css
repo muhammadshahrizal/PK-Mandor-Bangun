@@ -31,10 +31,55 @@ body {
     line-height: 1.7;
 }
 
+/* ========================
+   SCROLLBAR KUSTOM ELEGANT
+========================= */
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #000; /* Latar belakang track yang sangat gelap */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--gold);
+    border-radius: 20px;
+    border: 2px solid var(--bg-dark); /* Border agar thumb terlihat 'mengambang' */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: #f0c94b; /* Warna emas lebih cerah saat di-hover */
+}
+
+
+main {
+    padding-top: 40px; /* Sesuaikan nilai ini jika tinggi header Anda berbeda */
+}
+
 .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
+}
+
+/* Kelas bantuan untuk menengahkan konten di dalam sebuah section */
+.center-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* min-height: 100vh; <-- Dihapus untuk memperbaiki jarak */
+    padding: 120px 20px 80px; /* Padding atas untuk header, padding bawah untuk jarak ke section berikutnya */
+}
+
+/* Aturan untuk memastikan gambar responsif dan tidak terpotong */
+.center-content img {
+    max-width: 80%; /* Lebar gambar dikecilkan menjadi 80% dari wadahnya */
+    max-height: 80vh; /* Tinggi gambar tidak akan melebihi 80% tinggi layar */
+    height: auto; /* Menjaga rasio aspek gambar */
+    object-fit: contain; /* Memastikan seluruh gambar terlihat tanpa terpotong */
 }
 
 .logo img {
@@ -80,7 +125,9 @@ section {
     top: 0;
     z-index: 1000;
     border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    height: 105px; /* Tambahkan tinggi header agar lebih mudah dihitung */
 }
+
 
 .navbar {
     display: flex;
@@ -125,18 +172,30 @@ section {
     width: 100%;
 }
 
+.hamburger {
+    display: none; /* Sembunyikan di desktop secara default */
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
 /* ========================
         Hero Section
 ========================= */
 .hero {
+    /* Tambahkan padding atas untuk mengimbangi tinggi header */
+    padding-top: 120px; /* Gunakan nilai yang sedikit lebih besar dari tinggi header (95px) */
     height: 100vh;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('../images/Background.png');
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
-    padding-top: 80px;
 }
+
 
 .hero-content {
     max-width: 600px;
@@ -213,37 +272,37 @@ section {
 }
 
 /* ========================
-   Gallery Section (Slider Cards)
+   Alur Kerja Section (Slider Cards)
 ========================= */
-.gallery-section {
-    padding: 80px 0;
-    background-color: var(--bg-card);
+.alur-kerja-section {
+    padding: 10px 0;
+    background-color: var(--bg-dark);
 }
 
-.gallery-container {
-    display: flex;
+.alur-kerja-container {
+    display: center;
     width: 90%;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     gap: 10px;
-    height: 60vh;
+    height: 75vh;
     min-height: 500px;
 }
 
 .card {
     position: relative;
-    flex: 0.5;
+    flex: 1; /* Diubah agar memenuhi ruang yang tersedia */
+    max-width: 1000px; /* Batas lebar maksimum untuk card */
     border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     transition: flex 0.7s cubic-bezier(0.05, 0.61, 0.41, 0.95);
 }
 
 .card img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Diubah agar seluruh gambar terlihat */
     transition: transform 0.5s ease;
 }
 
@@ -272,7 +331,7 @@ section {
 }
 
 .card:hover {
-    flex: 4;
+    flex: 2; /* Efek hover tetap ada jika ada lebih dari 1 card */
 }
 
 .card:hover img {
@@ -288,7 +347,7 @@ section {
      Portfolio Section
 ========================= */
 #portfolio {
-    background-color: var(--bg-card);
+    background-color: var(--bg-dark);
     padding-top: 100px;
 }
 
@@ -343,7 +402,7 @@ section {
 ========================= */
 .footer {
     background-color: #000;
-    padding: 80px 0 30px;
+    padding: 20px 0 10px;
     border-top: 1px solid rgba(212, 175, 55, 0.1);
 }
 
@@ -424,10 +483,103 @@ address {
 
 .copyright {
     text-align: center;
-    padding-top: 30px;
+    padding-top: 10px;
     border-top: 1px solid #222;
     color: #555;
     font-size: 0.9rem;
+}
+
+/* ========================
+   Pop-up Ads (SMOOTH ANIMATION)
+========================= */
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Latar belakang sedikit lebih gelap */
+    backdrop-filter: blur(8px); /* Efek blur lebih kuat */
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Mulai dari transparan */
+    visibility: hidden;
+    /* Transisi untuk efek fade-in yang halus pada latar belakang */
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.popup-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-container {
+    position: relative;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90%;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    /* Mulai dari skala kecil dan sedikit ke atas */
+    transform: scale(0.9) translateY(-10px);
+    opacity: 0;
+    /* Transisi untuk animasi muncul yang elegan */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+    transition-delay: 0.1s; /* Jeda kecil sebelum pop-up muncul */
+}
+
+/* Saat .show ditambahkan, .popup-container akan kembali ke ukuran normal */
+.popup-overlay.show .popup-container {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.popup-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    z-index: 10001;
+}
+
+.popup-close:hover {
+    background: white;
+    transform: scale(1.1) rotate(90deg); /* Animasi putar saat di-hover */
+}
+
+.popup-close:active {
+    transform: scale(0.95);
+}
+
+.popup-link {
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 /* ========================
@@ -459,8 +611,99 @@ address {
 /* ========================
     Responsive Design
 ========================= */
+
 @media (max-width: 768px) {
-    .gallery-container {
+    /* Perubahan untuk Navbar dimulai di sini */
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-links.active {
+        display: block;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-dark);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        padding: 20px 0;
+        text-align: center;
+        border-top: 1px solid rgba(212, 175, 55, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        animation: fadeInDown 0.3s ease-out;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .nav-links ul {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .nav-links li {
+        list-style: none;
+        border-bottom: 1px solid #222;
+        margin: 0;
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 18px 25px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        color: var(--text-light);
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nav-links a:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background-color: var(--gold);
+        transform: translateX(-5px);
+        transition: transform 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: var(--gold);
+        background-color: rgba(212, 175, 55, 0.1);
+        padding-left: 30px;
+    }
+
+    .nav-links a:hover:before {
+        transform: translateX(0);
+    }
+    
+    .hamburger {
+        display: block;
+    }
+
+    .alur-kerja-container {
         flex-direction: column;
         height: auto;
         gap: 20px;
@@ -504,5 +747,171 @@ address {
 
     .section-title h2 {
         font-size: 2rem;
+    }
+
+    /* Pop-up Responsive */
+    .popup-container {
+        max-width: 95%;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .popup-close {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        top: 10px;
+        right: 10px;
+    }
+
+    .popup-image {
+        border-radius: 10px;
+        max-height: 80vh;
+        object-fit: contain;
+    }
+}
+
+/* Animation Effects */
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes popupFadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+}
+
+.popup-container.animate-in {
+    animation: popupFadeIn 0.3s ease forwards;
+}
+
+.popup-container.animate-out {
+    animation: popupFadeOut 0.3s ease forwards;
+}
+
+/* Menggunakan font Inter untuk tampilan yang modern */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Mengubah gradien overlay saat kursor diarahkan ke kartu */
+.category-card:hover::before {
+     background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+}
+
+/* Penyesuaian agar section-title dari tema Anda berfungsi dengan baik */
+#category-gallery .section-title h2 {
+    color: #333; /* Menyamakan warna judul */
+}
+
+#category-gallery .section-title p {
+    color: #666; /* Menyamakan warna sub-judul */
+}
+
+/* Gaya khusus untuk footer dengan 2 kolom */
+.footer-grid.two-col-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Membuat widget navigasi tidak terlihat */
+.footer-widget.invisible-widget {
+    visibility: hidden;
+}
+
+/* =================================
+   PRELOADER DENGAN LOGO KUSTOM
+================================= */
+#page-preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-dark); /* Latar belakang gelap sesuai tema */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Sembunyi secara default */
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#page-preloader.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.spinner {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+/* Pseudo-elemen untuk membuat elemen lain di dalam spinner */
+.spinner::before, .spinner::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+/* Lingkaran luar yang berputar (efek loading) */
+.spinner::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top-color: var(--gold); /* Warna emas sesuai tema Anda */
+    animation: spin 1.5s linear infinite;
+}
+
+/* Logo Anda di bagian tengah */
+.spinner::after {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    /* MEMANGGIL LOGO ANDA */
+    background-image: url('../images/Logo.png'); /* Pastikan path ini benar */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Animasi denyut (pulse) untuk logo */
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Animasi untuk putaran */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animasi untuk efek denyut pada logo */
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(0.95);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 1;
     }
 }
